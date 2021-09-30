@@ -1,0 +1,75 @@
+#+TITLE: Doom Emacs Config
+#+PROPERTY: header-args :tangle config.el
+
+* Table of Contents :toc:
+- [[#setting-the-font][Setting the font]]
+- [[#setting-the-theme][Setting the Theme]]
+- [[#setting-line-numbers-to-relative][Setting line numbers to relative]]
+- [[#org-mode][Org Mode]]
+  - [[#org-fold][Org Fold]]
+  - [[#org-directory][Org Directory]]
+  - [[#org-bullets][Org Bullets]]
+- [[#org-agenda][Org Agenda]]
+  - [[#agenda-files][Agenda Files]]
+  - [[#agenda-log][Agenda Log]]
+- [[#custom-key-bindings][Custom key bindings]]
+  - [[#auto-comment-lines][Auto comment lines]]
+
+* Setting the font
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+#+end_src
+
+* Setting the Theme
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-moonlight)
+#+end_src
+
+* Setting line numbers to relative
+#+begin_src emacs-lisp
+(setq doom-line-numbers-style t)
+#+end_src
+
+* Org Mode
+** Org Fold
+#+begin_src emacs-lisp
+(setq org-ellipsis " ▾")
+#+end_src
+** Org Directory
+#+begin_src emacs-lisp
+(setq org-directory "~/Desktop/Org/")
+#+end_src
+** Org Bullets
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook #'org-bullets-mode)
+(setq inhibit-compacting-font-caches t)
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.1))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.05))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
+#+end_src
+* Org Agenda
+** Agenda Files
+#+begin_src emacs-lisp
+(setq org-agenda-files
+      '("~/Desktop/Org/Agenda/Tasks.org"))
+#+end_src
+** Agenda Log
+#+begin_src emacs-lisp
+(setq org-agenda-start-with-log-mode t)
+(setq org-log-done 'time)
+(setq org-log-into-drawer t)
+#+end_src
+
+* Custom key bindings
+** Auto comment lines
+#+begin_src emacs-lisp
+(map!
+ :leader
+ :desc "Comment line"
+ "/" #'comment-line)
+#+end_src
