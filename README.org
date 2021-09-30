@@ -6,7 +6,7 @@
 - [[#setting-the-theme][Setting the Theme]]
 - [[#setting-line-numbers-to-relative][Setting line numbers to relative]]
 - [[#org-mode][Org Mode]]
-  - [[#org-fold][Org Fold]]
+  - [[#org-folded-state-icon][Org Folded State Icon]]
   - [[#org-directory][Org Directory]]
   - [[#org-bullets][Org Bullets]]
 - [[#org-agenda][Org Agenda]]
@@ -32,7 +32,7 @@
 #+end_src
 
 * Org Mode
-** Org Fold
+** Org Folded State Icon
 #+begin_src emacs-lisp
 (setq org-ellipsis " ▾")
 #+end_src
