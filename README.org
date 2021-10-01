@@ -56,7 +56,8 @@
 ** Agenda Files
 #+begin_src emacs-lisp
 (setq org-agenda-files
-      '("~/Desktop/Org/Agenda/Tasks.org"))
+      '("~/Desktop/Org/Agenda/Tasks.org"
+        "~/Desktop/Org/Agenda/Events.org"))
 #+end_src
 ** Agenda Log
 #+begin_src emacs-lisp
@@ -71,5 +72,5 @@
 (map!
  :leader
  :desc "Comment line"
- "/" #'comment-line)
+ "t /" #'comment-line)
 #+end_src

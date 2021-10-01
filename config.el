@@ -20,7 +20,8 @@
 )
 
 (setq org-agenda-files
-      '("~/Desktop/Org/Agenda/Tasks.org"))
+      '("~/Desktop/Org/Agenda/Tasks.org"
+        "~/Desktop/Org/Agenda/Events.org"))
 
 (setq org-agenda-start-with-log-mode t)
 (setq org-log-done 'time)
@@ -29,4 +30,4 @@
 (map!
  :leader
  :desc "Comment line"
- "/" #'comment-line)
+ "t /" #'comment-line)
