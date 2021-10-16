@@ -1,7 +1,7 @@
 (setq doom-font (font-spec :family "FiraCode NF" :size 20 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-dracula)
 
 (setq doom-line-numbers-style t)
 
