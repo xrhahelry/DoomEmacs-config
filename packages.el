@@ -2,3 +2,5 @@
 (package! treemacs-icons-dired)
 (package! 2048-game)
 (package! emmet-mode)
+(package! atom-one-dark-theme)
+(package! evil-terminal-cursor-change)

@@ -14,6 +14,7 @@
   - [[#agenda-log][Agenda Log]]
 - [[#custom-key-bindings][Custom key bindings]]
   - [[#auto-comment-lines][Auto comment lines]]
+- [[#cursor][Cursor]]
 
 * Setting the font
 #+begin_src emacs-lisp
@@ -23,12 +24,12 @@
 
 * Setting the Theme
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-monokai-octagon)
 #+end_src
 
 * Setting line numbers to relative
 #+begin_src emacs-lisp
-(setq doom-line-numbers-style t)
+(setq doom-line-numbers-relative t)
 #+end_src
 
 * Org Mode
@@ -49,7 +50,8 @@
   '(org-level-2 ((t (:inherit outline-2 :height 1.05))))
   '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
   '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0)
+)))
 )
 #+end_src
 * Org Agenda
@@ -57,6 +59,7 @@
 #+begin_src emacs-lisp
 (setq org-agenda-files
       '("~/Desktop/Org/Agenda/Tasks.org"
+        "~/Desktop/Org/Agenda/Urgent.org"
         "~/Desktop/Org/Agenda/Events.org"))
 #+end_src
 ** Agenda Log
@@ -73,4 +76,13 @@
  :leader
  :desc "Comment line"
  "t /" #'comment-line)
+#+end_src
+    
+* Cursor
+#+begin_src emacs-lisp
+(setq evil-motion-state-cursor 'box)  ; █
+(setq evil-visual-state-cursor 'box)  ; █
+(setq evil-normal-state-cursor 'box)  ; █
+(setq evil-insert-state-cursor 'bar)  ; █
+(setq evil-emacs-state-cursor  'hbar) ; _
 #+end_src
