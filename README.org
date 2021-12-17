@@ -2,8 +2,9 @@
 #+PROPERTY: header-args :tangle config.el
 
 * Table of Contents :toc:
-- [[#setting-the-font][Setting the font]]
-- [[#setting-the-theme][Setting the Theme]]
+- [[#ui][UI]]
+  - [[#setting-the-font][Setting the font]]
+  - [[#setting-the-theme][Setting the Theme]]
 - [[#org-mode][Org Mode]]
   - [[#org-folded-state-icon][Org Folded State Icon]]
   - [[#org-directory][Org Directory]]
@@ -19,30 +20,34 @@
   - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
 - [[#modeline][MODELINE]]
 
-* Setting the font
+* UI
+** Setting the font
+Setting the font so emacs is easily readable.
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 #+end_src
 
-* Setting the Theme
+** Setting the Theme
+Setting the theme to make emacs cool.
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-one)
 #+end_src
 
-#+RESULTS:
-: doom-dracula
-
 * Org Mode
+Settings for Org Mode
 ** Org Folded State Icon
+This settings the icon to display when the org headings are in a folded state.
 #+begin_src emacs-lisp
 (setq org-ellipsis " ▼ ")
 #+end_src
 ** Org Directory
+Location to my Org files directory.
 #+begin_src emacs-lisp
 (setq org-directory "~/Desktop/Org/")
 #+end_src
 ** Org Bullets
+Enabling org bullets and setting custom font size for all of them.
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook #'org-bullets-mode)
 (setq inhibit-compacting-font-caches t)
@@ -51,12 +56,15 @@
   '(org-level-2 ((t (:inherit outline-2 :height 1.3))))
   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
   '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0)
-)))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
 )
 #+end_src
+
+#+RESULTS:
+
 * Org Agenda
 ** Agenda Files
+The Location to my Agenda Org files.
 #+begin_src emacs-lisp
 (setq org-agenda-files
       '("~/Desktop/Org/Agenda/Tasks.org"
@@ -64,6 +72,7 @@
         "~/Desktop/Org/Agenda/Events.org"))
 #+end_src
 ** Agenda Log
+This setting makes Agenda more detaied.
 #+begin_src emacs-lisp
 (setq org-agenda-start-with-log-mode t)
 (setq org-log-done 'time)
@@ -71,7 +80,9 @@
 #+end_src
 
 * Custom key bindings
+Some of the keybindings of doom emacs do not suit my taste so i set a few custom ones.
 ** Auto comment lines
+Comment and uncommenting lines is one of the most used features so I set it to a easily accesible binding.
 #+begin_src emacs-lisp
 (map!
  :leader
@@ -80,6 +91,7 @@
 #+end_src
     
 * Cursor
+Cursor is the most important feature when coding. So i made to be a box all the time.
 #+begin_src emacs-lisp
 (setq evil-motion-state-cursor 'box)  ; █
 (setq evil-visual-state-cursor 'box)  ; █
@@ -87,9 +99,6 @@
 (setq evil-insert-state-cursor 'box)  ; █
 (setq evil-emacs-state-cursor  'hbar) ; _
 #+end_src
-
-#+RESULTS:
-: hbar
 
 * DASHBOARD
 Emacs Dashboard is an extensible startup screen showing you recent files, bookmarks, agenda items and an Emacs banner.
@@ -111,11 +120,10 @@ Emacs Dashboard is an extensible startup screen showing you recent files, bookma
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
                                     (bookmarks . "book"))))
-(setq doom-fallback-buffer "dashboard")
 #+end_src
 
 ** Dashboard in Emacsclient
-This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*.
+This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*. doesn't work at the moment.
 #+begin_src emacs-lisp
 (setq doom-fallback-buffer "*dashboard*")
 #+end_src

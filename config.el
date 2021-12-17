@@ -1,7 +1,7 @@
 (setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-one)
 
 (setq org-ellipsis " ▼ ")
 
@@ -14,8 +14,7 @@
   '(org-level-2 ((t (:inherit outline-2 :height 1.3))))
   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
   '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0)
-)))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
 )
 
 (setq org-agenda-files
@@ -53,7 +52,6 @@
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
                                     (bookmarks . "book"))))
-(setq doom-fallback-buffer "dashboard")
 
 (setq doom-fallback-buffer "*dashboard*")
 
