@@ -4,3 +4,5 @@
 (package! emmet-mode)
 (package! atom-one-dark-theme)
 (package! dashboard)
+(package! gruber-darker-theme)
+(package! rainbow-mode)

@@ -1,7 +1,14 @@
 (setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-dracula)
+
+(set-cursor-color "#ffdd33")
+(setq evil-motion-state-cursor 'box)  ; █
+(setq evil-visual-state-cursor 'box)  ; █
+(setq evil-normal-state-cursor 'box)  ; █
+(setq evil-insert-state-cursor 'box)  ; █
+(setq evil-emacs-state-cursor  'hbar) ; _
 
 (setq org-ellipsis " ▼ ")
 
@@ -31,12 +38,6 @@
  :desc "Comment line"
  "TAB TAB" #'comment-line)
 
-(setq evil-motion-state-cursor 'box)  ; █
-(setq evil-visual-state-cursor 'box)  ; █
-(setq evil-normal-state-cursor 'box)  ; █
-(setq evil-insert-state-cursor 'box)  ; █
-(setq evil-emacs-state-cursor  'hbar) ; _
-
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
@@ -57,4 +58,18 @@
 
 (set-face-attribute 'mode-line nil :font "Ubuntu Mono-13")
 (setq doom-modeline-height 30     ;; sets modeline height
-      doom-modeline-bar-width 5)  ;; sets right bar width
+      doom-modeline-bar-width 3)  ;; sets right bar width
+
+;; (setq all-the-icons-scale-factor 1.1)
+
+(map! :leader
+      :desc "Switch to perspective NAME" "DEL" #'persp-switch
+      :desc "Switch to buffer in perspective" "," #'persp-switch-to-buffer
+      :desc "Switch to next perspective" "]" #'persp-next
+      :desc "Switch to previous perspective" "[" #'persp-prev
+      :desc "Add a buffer current perspective" "+" #'persp-add-buffer
+      :desc "Remove perspective by name" "-" #'persp-remove-by-name)
+
+(define-globalized-minor-mode global-rainbow-mode rainbow-mode
+  (lambda () (rainbow-mode 1)))
+(global-rainbow-mode 1 )
