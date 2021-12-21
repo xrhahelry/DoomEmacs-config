@@ -18,9 +18,9 @@
   - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
 - [[#modeline][MODELINE]]
   - [[#configuring-modeline][Configuring Modeline]]
-  - [[#modeline-fix][Modeline Fix]]
 - [[#perspective][PERSPECTIVE]]
 - [[#rainbow-mode][RAINBOW MODE]]
+- [[#emojis][EMOJIS]]
 
 * UI
 ** Setting the font
@@ -37,9 +37,13 @@ Setting the theme to make emacs cool.
 #+end_src
 
 ** Cursor
-Cursor is the most important feature when coding. So i made to be a box all the time.
+Cursor is the most important feature when coding. So i made to be a box all the time. Also changed cursor color to the gruber cursor color.
 #+begin_src emacs-lisp
 (set-cursor-color "#ffdd33")
+(evil-set-cursor-color "#ffdd33")
+(setq +evil--default-cursor-color "#ffdd33")
+(setq +evil--emacs-cursor-color "#ffdd33")
+(custom-set-faces '(cursor ((t (:background "#ffdd33")))))
 (setq evil-motion-state-cursor 'box)  ; █
 (setq evil-visual-state-cursor 'box)  ; █
 (setq evil-normal-state-cursor 'box)  ; █
@@ -49,8 +53,13 @@ Cursor is the most important feature when coding. So i made to be a box all the 
 
 * Org Mode
 Settings for Org Mode
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Org babel tangle" "m B" #'org-babel-tangle)
+#+end_src
+
 ** Org Folded State Icon
-This settings the icon to display when the org headings are in a folded state.
+This sets the icon to display when the org headings are in a folded state.
 #+begin_src emacs-lisp
 (setq org-ellipsis " ▼ ")
 #+end_src
@@ -72,8 +81,6 @@ Enabling org bullets and setting custom font size for all of them.
   '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
 )
 #+end_src
-
-#+RESULTS:
 
 ** Org Agenda
 *** Agenda Files
@@ -138,15 +145,9 @@ https://github.com/seagle0128/doom-modeline
 ** Configuring Modeline
 Setting custom font, height and width of the bar in the right side of the modeline.
 #+begin_src emacs-lisp
-(set-face-attribute 'mode-line nil :font "Ubuntu Mono-13")
+(set-face-attribute 'mode-line nil :font "Ubuntu Mono-14")
 (setq doom-modeline-height 30     ;; sets modeline height
       doom-modeline-bar-width 3)  ;; sets right bar width
-#+end_src
-
-** Modeline Fix
-When file is opened in emacs some part of the right side of the modeline get cut off this fixes it.
-#+begin_src emacs-lisp
-;; (setq all-the-icons-scale-factor 1.1)
 #+end_src
 
 * PERSPECTIVE
@@ -169,4 +170,11 @@ Rainbox mode displays the actual color for any hex value color.  It's such a nic
 (define-globalized-minor-mode global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
 (global-rainbow-mode 1 )
+#+end_src
+
+* EMOJIS
+Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
+#+begin_src emacs-lisp
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
 #+end_src

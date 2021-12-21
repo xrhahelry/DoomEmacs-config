@@ -4,11 +4,18 @@
 (setq doom-theme 'doom-dracula)
 
 (set-cursor-color "#ffdd33")
+(evil-set-cursor-color "#ffdd33")
+(setq +evil--default-cursor-color "#ffdd33")
+(setq +evil--emacs-cursor-color "#ffdd33")
+(custom-set-faces '(cursor ((t (:background "#ffdd33")))))
 (setq evil-motion-state-cursor 'box)  ; █
 (setq evil-visual-state-cursor 'box)  ; █
 (setq evil-normal-state-cursor 'box)  ; █
 (setq evil-insert-state-cursor 'box)  ; █
 (setq evil-emacs-state-cursor  'hbar) ; _
+
+(map! :leader
+      :desc "Org babel tangle" "m B" #'org-babel-tangle)
 
 (setq org-ellipsis " ▼ ")
 
@@ -56,11 +63,9 @@
 
 (setq doom-fallback-buffer "*dashboard*")
 
-(set-face-attribute 'mode-line nil :font "Ubuntu Mono-13")
+(set-face-attribute 'mode-line nil :font "Ubuntu Mono-14")
 (setq doom-modeline-height 30     ;; sets modeline height
       doom-modeline-bar-width 3)  ;; sets right bar width
-
-;; (setq all-the-icons-scale-factor 1.1)
 
 (map! :leader
       :desc "Switch to perspective NAME" "DEL" #'persp-switch
@@ -73,3 +78,6 @@
 (define-globalized-minor-mode global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
 (global-rainbow-mode 1 )
+
+(use-package emojify
+  :hook (after-init . global-emojify-mode))

@@ -6,3 +6,4 @@
 (package! dashboard)
 (package! gruber-darker-theme)
 (package! rainbow-mode)
+(package! emojify)
