@@ -6,7 +6,8 @@
   - [[#setting-the-font][Setting the font]]
   - [[#setting-the-theme][Setting the Theme]]
   - [[#cursor][Cursor]]
-- [[#org-mode][Org Mode]]
+  - [[#splits][Splits]]
+- [[#org-mode][ORG MODE]]
   - [[#org-folded-state-icon][Org Folded State Icon]]
   - [[#org-directory][Org Directory]]
   - [[#org-bullets][Org Bullets]]
@@ -33,7 +34,7 @@ Setting the font so emacs is easily readable.
 ** Setting the Theme
 Setting the theme to make emacs cool.
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'gruber-darker)
 #+end_src
 
 ** Cursor
@@ -51,7 +52,20 @@ Cursor is the most important feature when coding. So i made to be a box all the 
 (setq evil-emacs-state-cursor  'hbar) ; _
 #+end_src
 
-* Org Mode
+** Splits
+I set splits to default to opening on the right using 'prefer-vertical-split'.  I set a keybinding for 'clone-indirect-buffer-other-window' for when I want to have the same document in two splits.  The text of the indirect buffer is always identical to the text of its base buffer; changes made by editing either one are visible immediately in the other.  But in all other respects, the indirect buffer and its base buffer are completely separate.  For example, I can fold one split but other will be unfolded.
+
+#+BEGIN_SRC emacs-lisp
+(defun prefer-vertical-split ()
+  (set-variable 'split-height-threshold nil t)
+  (set-variable 'split-width-threshold 40 t)) ; make this as low as needed
+(add-hook 'markdown-mode-hook 'prefer-vertical-split)
+(map! :leader
+      :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
+#+END_SRC
+
+
+* ORG MODE
 Settings for Org Mode
 #+begin_src emacs-lisp
 (map! :leader

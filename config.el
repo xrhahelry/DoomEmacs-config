@@ -1,7 +1,7 @@
 (setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'gruber-darker)
 
 (set-cursor-color "#ffdd33")
 (evil-set-cursor-color "#ffdd33")
@@ -13,6 +13,13 @@
 (setq evil-normal-state-cursor 'box)  ; █
 (setq evil-insert-state-cursor 'box)  ; █
 (setq evil-emacs-state-cursor  'hbar) ; _
+
+(defun prefer-vertical-split ()
+  (set-variable 'split-height-threshold nil t)
+  (set-variable 'split-width-threshold 40 t)) ; make this as low as needed
+(add-hook 'markdown-mode-hook 'prefer-vertical-split)
+(map! :leader
+      :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
