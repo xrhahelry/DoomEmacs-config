@@ -14,12 +14,17 @@
 (setq evil-insert-state-cursor 'box)  ; █
 (setq evil-emacs-state-cursor  'hbar) ; _
 
-(defun prefer-vertical-split ()
+(defun prefer-horizontal-split ()
   (set-variable 'split-height-threshold nil t)
   (set-variable 'split-width-threshold 40 t)) ; make this as low as needed
-(add-hook 'markdown-mode-hook 'prefer-vertical-split)
+(add-hook 'markdown-mode-hook 'prefer-horizontal-split)
 (map! :leader
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
+
+(map! :leader
+      (:prefix ("w" . "window")
+       :desc "Winner redo" "<right>" #'winner-redo
+       :desc "Winner undo" "<left>" #'winner-undo))
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)

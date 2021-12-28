@@ -7,6 +7,7 @@
   - [[#setting-the-theme][Setting the Theme]]
   - [[#cursor][Cursor]]
   - [[#splits][Splits]]
+  - [[#winner-mode][Winner mode]]
 - [[#org-mode][ORG MODE]]
   - [[#org-folded-state-icon][Org Folded State Icon]]
   - [[#org-directory][Org Directory]]
@@ -53,17 +54,26 @@ Cursor is the most important feature when coding. So i made to be a box all the 
 #+end_src
 
 ** Splits
-I set splits to default to opening on the right using 'prefer-vertical-split'.  I set a keybinding for 'clone-indirect-buffer-other-window' for when I want to have the same document in two splits.  The text of the indirect buffer is always identical to the text of its base buffer; changes made by editing either one are visible immediately in the other.  But in all other respects, the indirect buffer and its base buffer are completely separate.  For example, I can fold one split but other will be unfolded.
+I set splits to default to opening on the right using 'prefer-horizontal-split'.  I set a keybinding for 'clone-indirect-buffer-other-window' for when I want to have the same document in two splits.  The text of the indirect buffer is always identical to the text of its base buffer; changes made by editing either one are visible immediately in the other.  But in all other respects, the indirect buffer and its base buffer are completely separate.  For example, I can fold one split but other will be unfolded.
 
 #+BEGIN_SRC emacs-lisp
-(defun prefer-vertical-split ()
+(defun prefer-horizontal-split ()
   (set-variable 'split-height-threshold nil t)
   (set-variable 'split-width-threshold 40 t)) ; make this as low as needed
-(add-hook 'markdown-mode-hook 'prefer-vertical-split)
+(add-hook 'markdown-mode-hook 'prefer-horizontal-split)
 (map! :leader
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
 #+END_SRC
 
+** Winner mode
+Winner mode has been included with GNU Emacs since version 20.  This is a global minor mode and, when activated, it allows you to “undo” (and “redo”) changes in the window configuration with the key commands 'SCP w <left>' and 'SPC w <right>'.
+
+#+BEGIN_SRC emacs-lisp
+(map! :leader
+      (:prefix ("w" . "window")
+       :desc "Winner redo" "<right>" #'winner-redo
+       :desc "Winner undo" "<left>" #'winner-undo))
+#+END_SRC
 
 * ORG MODE
 Settings for Org Mode
