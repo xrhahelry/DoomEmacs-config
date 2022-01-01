@@ -1,7 +1,7 @@
 (setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-theme 'gruber-darker)
+(setq doom-theme 'doom-palenight)
 
 (set-cursor-color "#ffdd33")
 (evil-set-cursor-color "#ffdd33")
@@ -28,6 +28,7 @@
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
+(setq org-clock-sound "~/.doom.d/ding.wav")
 
 (setq org-ellipsis " ▼ ")
 

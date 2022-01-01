@@ -35,7 +35,7 @@ Setting the font so emacs is easily readable.
 ** Setting the Theme
 Setting the theme to make emacs cool.
 #+begin_src emacs-lisp
-(setq doom-theme 'gruber-darker)
+(setq doom-theme 'doom-palenight)
 #+end_src
 
 ** Cursor
@@ -80,6 +80,7 @@ Settings for Org Mode
 #+begin_src emacs-lisp
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
+(setq org-clock-sound "~/.doom.d/ding.wav")
 #+end_src
 
 ** Org Folded State Icon
