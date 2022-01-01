@@ -5,37 +5,71 @@
 - [[#ui][UI]]
   - [[#setting-the-font][Setting the font]]
   - [[#setting-the-theme][Setting the Theme]]
+  - [[#winner-mode][Winner mode]]
+  - [[#perspective][PERSPECTIVE]]
+- [[#editor-settings][EDITOR SETTINGS]]
+  - [[#commenting-lines][Commenting lines]]
   - [[#cursor][Cursor]]
   - [[#splits][Splits]]
-  - [[#winner-mode][Winner mode]]
+  - [[#auto-save-changed-changed-files][AUTO SAVE CHANGED CHANGED FILES]]
+  - [[#rainbow-mode][RAINBOW MODE]]
+  - [[#emojis][EMOJIS]]
 - [[#org-mode][ORG MODE]]
   - [[#org-folded-state-icon][Org Folded State Icon]]
   - [[#org-directory][Org Directory]]
   - [[#org-bullets][Org Bullets]]
   - [[#org-agenda][Org Agenda]]
-- [[#custom-key-bindings][Custom key bindings]]
-  - [[#auto-comment-lines][Auto comment lines]]
 - [[#dashboard][DASHBOARD]]
   - [[#configuring-dashboard][Configuring Dashboard]]
   - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
 - [[#modeline][MODELINE]]
   - [[#configuring-modeline][Configuring Modeline]]
-- [[#perspective][PERSPECTIVE]]
-- [[#rainbow-mode][RAINBOW MODE]]
-- [[#emojis][EMOJIS]]
 
 * UI
 ** Setting the font
 Setting the font so emacs is easily readable.
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 20 :weight 'light)
+      doom-variable-pitch-font (font-spec :family "Fira Code Retina" :size 13 :weight 'light))
 #+end_src
 
 ** Setting the Theme
 Setting the theme to make emacs cool.
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-palenight)
+#+end_src
+
+** Winner mode
+Winner mode has been included with GNU Emacs since version 20.  This is a global minor mode and, when activated, it allows you to “undo” (and “redo”) changes in the window configuration with the key commands 'SCP w <left>' and 'SPC w <right>'.
+
+#+BEGIN_SRC emacs-lisp
+(map! :leader
+      (:prefix ("w" . "window")
+       :desc "Winner redo" "<right>" #'winner-redo
+       :desc "Winner undo" "<left>" #'winner-undo))
+#+END_SRC
+
+** PERSPECTIVE
+Perspective provides multiple named workspaces (or "perspectives") in Emacs, similar to having multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout, making it easy to work on many separate projects without getting lost in all the buffers.  Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available (by default).  Doom Emacs uses 'SPC some_key' for binding some of the perspective commands, so I used this binging format for the perspective bindings that I created..
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Switch to perspective NAME" "DEL" #'persp-switch
+      :desc "Switch to buffer in perspective" "," #'persp-switch-to-buffer
+      :desc "Switch to next perspective" "]" #'persp-next
+      :desc "Switch to previous perspective" "[" #'persp-prev
+      :desc "Add a buffer current perspective" "+" #'persp-add-buffer
+      :desc "Remove perspective by name" "-" #'persp-remove-by-name)
+#+end_src
+
+* EDITOR SETTINGS
+** Commenting lines
+Comment and uncommenting lines is one of the most used features so I set it to a easily accesible binding.
+#+begin_src emacs-lisp
+(map!
+ :leader
+ :desc "Comment line"
+ "TAB TAB" #'comment-line)
 #+end_src
 
 ** Cursor
@@ -65,15 +99,31 @@ I set splits to default to opening on the right using 'prefer-horizontal-split'.
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
 #+END_SRC
 
-** Winner mode
-Winner mode has been included with GNU Emacs since version 20.  This is a global minor mode and, when activated, it allows you to “undo” (and “redo”) changes in the window configuration with the key commands 'SCP w <left>' and 'SPC w <right>'.
+** AUTO SAVE CHANGED CHANGED FILES
+#+begin_src emacs-lisp
+(use-package super-save
+  :defer 1
+  :diminish super-save-mode
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t))
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
-(map! :leader
-      (:prefix ("w" . "window")
-       :desc "Winner redo" "<right>" #'winner-redo
-       :desc "Winner undo" "<left>" #'winner-undo))
-#+END_SRC
+** RAINBOW MODE
+Rainbox mode displays the actual color for any hex value color.  It's such a nice feature that I wanted it turned on all the time, regardless of what mode I am in.  The following creates a global minor mode for rainbow-mode and enables it.
+
+#+begin_src emacs-lisp
+(define-globalized-minor-mode global-rainbow-mode rainbow-mode
+  (lambda () (rainbow-mode 1)))
+(global-rainbow-mode 1 )
+#+end_src
+
+** EMOJIS
+Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
+#+begin_src emacs-lisp
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+#+end_src
 
 * ORG MODE
 Settings for Org Mode
@@ -124,17 +174,6 @@ This setting makes Agenda more detaied.
 (setq org-log-into-drawer t)
 #+end_src
 
-* Custom key bindings
-Some of the keybindings of doom emacs do not suit my taste so i set a few custom ones.
-** Auto comment lines
-Comment and uncommenting lines is one of the most used features so I set it to a easily accesible binding.
-#+begin_src emacs-lisp
-(map!
- :leader
- :desc "Comment line"
- "TAB TAB" #'comment-line)
-#+end_src
-    
 * DASHBOARD
 Emacs Dashboard is an extensible startup screen showing you recent files, bookmarks, agenda items and an Emacs banner.
 
@@ -144,7 +183,7 @@ Emacs Dashboard is an extensible startup screen showing you recent files, bookma
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  ;; (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.doom.d/doom-emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
@@ -171,35 +210,7 @@ https://github.com/seagle0128/doom-modeline
 Setting custom font, height and width of the bar in the right side of the modeline.
 #+begin_src emacs-lisp
 (set-face-attribute 'mode-line nil :font "Ubuntu Mono-14")
-(setq doom-modeline-height 30     ;; sets modeline height
-      doom-modeline-bar-width 3)  ;; sets right bar width
+(setq doom-modeline-height 45     ;; sets modeline height
+      doom-modeline-bar-width 5)  ;; sets right bar width
 #+end_src
 
-* PERSPECTIVE
-Perspective provides multiple named workspaces (or "perspectives") in Emacs, similar to having multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout, making it easy to work on many separate projects without getting lost in all the buffers.  Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available (by default).  Doom Emacs uses 'SPC some_key' for binding some of the perspective commands, so I used this binging format for the perspective bindings that I created..
-
-#+begin_src emacs-lisp
-(map! :leader
-      :desc "Switch to perspective NAME" "DEL" #'persp-switch
-      :desc "Switch to buffer in perspective" "," #'persp-switch-to-buffer
-      :desc "Switch to next perspective" "]" #'persp-next
-      :desc "Switch to previous perspective" "[" #'persp-prev
-      :desc "Add a buffer current perspective" "+" #'persp-add-buffer
-      :desc "Remove perspective by name" "-" #'persp-remove-by-name)
-#+end_src
-
-* RAINBOW MODE
-Rainbox mode displays the actual color for any hex value color.  It's such a nice feature that I wanted it turned on all the time, regardless of what mode I am in.  The following creates a global minor mode for rainbow-mode and enables it.
-
-#+begin_src emacs-lisp
-(define-globalized-minor-mode global-rainbow-mode rainbow-mode
-  (lambda () (rainbow-mode 1)))
-(global-rainbow-mode 1 )
-#+end_src
-
-* EMOJIS
-Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
-#+begin_src emacs-lisp
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
-#+end_src

@@ -7,3 +7,4 @@
 (package! gruber-darker-theme)
 (package! rainbow-mode)
 (package! emojify)
+(package! super-save)

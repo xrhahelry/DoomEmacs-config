@@ -1,7 +1,25 @@
-(setq doom-font (font-spec :family "Fira Code Retina" :size 20 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 20 :weight 'light)
+      doom-variable-pitch-font (font-spec :family "Fira Code Retina" :size 13 :weight 'light))
 
 (setq doom-theme 'doom-palenight)
+
+(map! :leader
+      (:prefix ("w" . "window")
+       :desc "Winner redo" "<right>" #'winner-redo
+       :desc "Winner undo" "<left>" #'winner-undo))
+
+(map! :leader
+      :desc "Switch to perspective NAME" "DEL" #'persp-switch
+      :desc "Switch to buffer in perspective" "," #'persp-switch-to-buffer
+      :desc "Switch to next perspective" "]" #'persp-next
+      :desc "Switch to previous perspective" "[" #'persp-prev
+      :desc "Add a buffer current perspective" "+" #'persp-add-buffer
+      :desc "Remove perspective by name" "-" #'persp-remove-by-name)
+
+(map!
+ :leader
+ :desc "Comment line"
+ "TAB TAB" #'comment-line)
 
 (set-cursor-color "#ffdd33")
 (evil-set-cursor-color "#ffdd33")
@@ -21,10 +39,19 @@
 (map! :leader
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
 
-(map! :leader
-      (:prefix ("w" . "window")
-       :desc "Winner redo" "<right>" #'winner-redo
-       :desc "Winner undo" "<left>" #'winner-undo))
+(use-package super-save
+  :defer 1
+  :diminish super-save-mode
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t))
+
+(define-globalized-minor-mode global-rainbow-mode rainbow-mode
+  (lambda () (rainbow-mode 1)))
+(global-rainbow-mode 1 )
+
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
@@ -53,16 +80,11 @@
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
 
-(map!
- :leader
- :desc "Comment line"
- "TAB TAB" #'comment-line)
-
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  ;; (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.doom.d/doom-emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
@@ -77,20 +99,5 @@
 (setq doom-fallback-buffer "*dashboard*")
 
 (set-face-attribute 'mode-line nil :font "Ubuntu Mono-14")
-(setq doom-modeline-height 30     ;; sets modeline height
-      doom-modeline-bar-width 3)  ;; sets right bar width
-
-(map! :leader
-      :desc "Switch to perspective NAME" "DEL" #'persp-switch
-      :desc "Switch to buffer in perspective" "," #'persp-switch-to-buffer
-      :desc "Switch to next perspective" "]" #'persp-next
-      :desc "Switch to previous perspective" "[" #'persp-prev
-      :desc "Add a buffer current perspective" "+" #'persp-add-buffer
-      :desc "Remove perspective by name" "-" #'persp-remove-by-name)
-
-(define-globalized-minor-mode global-rainbow-mode rainbow-mode
-  (lambda () (rainbow-mode 1)))
-(global-rainbow-mode 1 )
-
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+(setq doom-modeline-height 45     ;; sets modeline height
+      doom-modeline-bar-width 5)  ;; sets right bar width
