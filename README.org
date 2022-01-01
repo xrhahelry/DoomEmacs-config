@@ -2,6 +2,7 @@
 #+PROPERTY: header-args :tangle config.el
 
 * Table of Contents :toc:
+- [[#doom-emacs-config][DOOM EMACS CONFIG]]
 - [[#ui][UI]]
   - [[#setting-the-font][Setting the font]]
   - [[#setting-the-theme][Setting the Theme]]
@@ -15,8 +16,6 @@
   - [[#rainbow-mode][RAINBOW MODE]]
   - [[#emojis][EMOJIS]]
 - [[#org-mode][ORG MODE]]
-  - [[#org-folded-state-icon][Org Folded State Icon]]
-  - [[#org-directory][Org Directory]]
   - [[#org-bullets][Org Bullets]]
   - [[#org-agenda][Org Agenda]]
 - [[#dashboard][DASHBOARD]]
@@ -24,6 +23,9 @@
   - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
 - [[#modeline][MODELINE]]
   - [[#configuring-modeline][Configuring Modeline]]
+
+* DOOM EMACS CONFIG
+This is my Doom Emacs config which is filled mostly by code snippets I found online. This is an every evolving config as I find new cool things to put in here every day.
 
 * UI
 ** Setting the font
@@ -130,19 +132,14 @@ Settings for Org Mode
 #+begin_src emacs-lisp
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
+;; Sound to play when the clock runs out
 (setq org-clock-sound "~/.doom.d/ding.wav")
-#+end_src
-
-** Org Folded State Icon
-This sets the icon to display when the org headings are in a folded state.
-#+begin_src emacs-lisp
+;; This sets the icon to display when the org headings are in a folded state.
 (setq org-ellipsis " ▼ ")
-#+end_src
-** Org Directory
-Location to my Org files directory.
-#+begin_src emacs-lisp
+;; Location to my Org files directory.
 (setq org-directory "~/Desktop/Org/")
 #+end_src
+
 ** Org Bullets
 Enabling org bullets and setting custom font size for all of them.
 #+begin_src emacs-lisp

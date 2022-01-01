@@ -55,10 +55,11 @@
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
+;; Sound to play when the clock runs out
 (setq org-clock-sound "~/.doom.d/ding.wav")
-
+;; This sets the icon to display when the org headings are in a folded state.
 (setq org-ellipsis " ▼ ")
-
+;; Location to my Org files directory.
 (setq org-directory "~/Desktop/Org/")
 
 (add-hook 'org-mode-hook #'org-bullets-mode)
