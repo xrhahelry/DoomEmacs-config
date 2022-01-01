@@ -62,15 +62,17 @@
 ;; Location to my Org files directory.
 (setq org-directory "~/Desktop/Org/")
 
-(add-hook 'org-mode-hook #'org-bullets-mode)
 (setq inhibit-compacting-font-caches t)
 (custom-set-faces
   '(org-level-1 ((t (:inherit outline-1 :height 1.4))))
   '(org-level-2 ((t (:inherit outline-2 :height 1.3))))
   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
   '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+(use-package org-bullets
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "◆" "○" "●" "◆")))
 
 (setq org-agenda-files
       '("~/Desktop/Org/Agenda/Tasks.org"
@@ -102,3 +104,11 @@
 (set-face-attribute 'mode-line nil :font "Ubuntu Mono-14")
 (setq doom-modeline-height 45     ;; sets modeline height
       doom-modeline-bar-width 5)  ;; sets right bar width
+
+(map! :leader
+      (:prefix ("e". "evaluate/EWW")
+       :desc "Evaluate elisp in buffer" "b" #'eval-buffer
+       :desc "Evaluate defun" "d" #'eval-defun
+       :desc "Evaluate elisp expression" "e" #'eval-expression
+       :desc "Evaluate last sexpression" "l" #'eval-last-sexp
+       :desc "Evaluate elisp in region" "r" #'eval-region))

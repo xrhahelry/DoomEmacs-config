@@ -12,9 +12,9 @@
   - [[#commenting-lines][Commenting lines]]
   - [[#cursor][Cursor]]
   - [[#splits][Splits]]
-  - [[#auto-save-changed-changed-files][AUTO SAVE CHANGED CHANGED FILES]]
-  - [[#rainbow-mode][RAINBOW MODE]]
-  - [[#emojis][EMOJIS]]
+  - [[#auto-save-changed-files][Auto save changed files]]
+  - [[#colored-strings][Colored strings]]
+  - [[#emojis][Emojis]]
 - [[#org-mode][ORG MODE]]
   - [[#org-bullets][Org Bullets]]
   - [[#org-agenda][Org Agenda]]
@@ -23,6 +23,7 @@
   - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
 - [[#modeline][MODELINE]]
   - [[#configuring-modeline][Configuring Modeline]]
+- [[#evaluate-elisp-code][EVALUATE ELISP CODE]]
 
 * DOOM EMACS CONFIG
 This is my Doom Emacs config which is filled mostly by code snippets I found online. This is an every evolving config as I find new cool things to put in here every day.
@@ -101,7 +102,7 @@ I set splits to default to opening on the right using 'prefer-horizontal-split'.
       :desc "Clone indirect buffer other window" "b c" #'clone-indirect-buffer-other-window)
 #+END_SRC
 
-** AUTO SAVE CHANGED CHANGED FILES
+** Auto save changed files
 #+begin_src emacs-lisp
 (use-package super-save
   :defer 1
@@ -111,16 +112,15 @@ I set splits to default to opening on the right using 'prefer-horizontal-split'.
   (setq super-save-auto-save-when-idle t))
 #+end_src
 
-** RAINBOW MODE
+** Colored strings
 Rainbox mode displays the actual color for any hex value color.  It's such a nice feature that I wanted it turned on all the time, regardless of what mode I am in.  The following creates a global minor mode for rainbow-mode and enables it.
-
 #+begin_src emacs-lisp
 (define-globalized-minor-mode global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
 (global-rainbow-mode 1 )
 #+end_src
 
-** EMOJIS
+** Emojis
 Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :).
 #+begin_src emacs-lisp
 (use-package emojify
@@ -143,15 +143,17 @@ Settings for Org Mode
 ** Org Bullets
 Enabling org bullets and setting custom font size for all of them.
 #+begin_src emacs-lisp
-(add-hook 'org-mode-hook #'org-bullets-mode)
 (setq inhibit-compacting-font-caches t)
 (custom-set-faces
   '(org-level-1 ((t (:inherit outline-1 :height 1.4))))
   '(org-level-2 ((t (:inherit outline-2 :height 1.3))))
   '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
   '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+(use-package org-bullets
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "◆" "○" "●" "◆")))
 #+end_src
 
 ** Org Agenda
@@ -163,6 +165,7 @@ The Location to my Agenda Org files.
         "~/Desktop/Org/Agenda/Urgent.org"
         "~/Desktop/Org/Agenda/Events.org"))
 #+end_src
+
 *** Agenda Log
 This setting makes Agenda more detaied.
 #+begin_src emacs-lisp
@@ -211,3 +214,14 @@ Setting custom font, height and width of the bar in the right side of the modeli
       doom-modeline-bar-width 5)  ;; sets right bar width
 #+end_src
 
+* EVALUATE ELISP CODE
+When working in emacs it is very important to be able to run a piece of emacs code whenever so I set a few easy keybindings for it.
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("e". "evaluate/EWW")
+       :desc "Evaluate elisp in buffer" "b" #'eval-buffer
+       :desc "Evaluate defun" "d" #'eval-defun
+       :desc "Evaluate elisp expression" "e" #'eval-expression
+       :desc "Evaluate last sexpression" "l" #'eval-last-sexp
+       :desc "Evaluate elisp in region" "r" #'eval-region))
+#+end_src
