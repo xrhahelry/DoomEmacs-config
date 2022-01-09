@@ -24,6 +24,7 @@
 - [[#modeline][MODELINE]]
   - [[#configuring-modeline][Configuring Modeline]]
 - [[#evaluate-elisp-code][EVALUATE ELISP CODE]]
+- [[#calendar][CALENDAR]]
 
 * DOOM EMACS CONFIG
 This is my Doom Emacs config which is filled mostly by code snippets I found online. This is an every evolving config as I find new cool things to put in here every day.
@@ -54,6 +55,16 @@ Winner mode has been included with GNU Emacs since version 20.  This is a global
 
 ** PERSPECTIVE
 Perspective provides multiple named workspaces (or "perspectives") in Emacs, similar to having multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout, making it easy to work on many separate projects without getting lost in all the buffers.  Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available (by default).  Doom Emacs uses 'SPC some_key' for binding some of the perspective commands, so I used this binging format for the perspective bindings that I created..
+
+| COMMAND                    | DESCRIPTION                         | KEYBINDING |
+|----------------------------+-------------------------------------+------------|
+| persp-switch               | Switch to perspective NAME          | SPC DEL    |
+| persp-switch-to-buffer     | Switch to buffer in perspective     | SPC ,      |
+| persp-next                 | Switch to next perspective          | SPC ]      |
+| persp-prev                 | Switch to previous perspective      | SPC [      |
+| persp-add-buffer           | Add a buffer to current perspective | SPC +      |
+| persp-remove-by-name       | Remove perspective by name          | SPC -      |
+| +workspace/switch-to-{0-9} | Switch to workspace /n/             | SPC 0-9    |
 
 #+begin_src emacs-lisp
 (map! :leader
@@ -153,7 +164,7 @@ Enabling org bullets and setting custom font size for all of them.
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "◆" "○" "●" "◆")))
+  (org-bullets-bullet-list '("◉" "◆" "○" "●" "◆" "○" "●")))
 #+end_src
 
 ** Org Agenda
@@ -176,14 +187,20 @@ This setting makes Agenda more detaied.
 
 * DASHBOARD
 Emacs Dashboard is an extensible startup screen showing you recent files, bookmarks, agenda items and an Emacs banner.
-
 ** Configuring Dashboard
 #+begin_src emacs-lisp
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  ;; (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  (setq dashboard-banner-logo-title "\nKEYBINDINGS:\
+\nFind file               (SPC .)     \
+Open buffer list    (SPC b i)\
+\nFind recent files       (SPC f r)   \
+Open the eshell     (SPC e s)\
+\nOpen dired file manager (SPC d d)   \
+List of keybindings (SPC h b b)")
+  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.doom.d/doom-emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
@@ -211,7 +228,9 @@ Setting custom font, height and width of the bar in the right side of the modeli
 #+begin_src emacs-lisp
 (set-face-attribute 'mode-line nil :font "Ubuntu Mono-14")
 (setq doom-modeline-height 45     ;; sets modeline height
-      doom-modeline-bar-width 5)  ;; sets right bar width
+      doom-modeline-bar-width 5     ;; sets right bar width
+      doom-modeline-persp-name t  ;; adds perspective name to modeline
+      doom-modeline-persp-icon t)   ;; adds folder icon next to persp name
 #+end_src
 
 * EVALUATE ELISP CODE
@@ -224,4 +243,80 @@ When working in emacs it is very important to be able to run a piece of emacs co
        :desc "Evaluate elisp expression" "e" #'eval-expression
        :desc "Evaluate last sexpression" "l" #'eval-last-sexp
        :desc "Evaluate elisp in region" "r" #'eval-region))
+#+end_src
+
+* CALENDAR
+Let's make a 12-month calendar available so we can have a calendar app that, when we click on time/date in xmobar, we get a nice 12-month calendar to view.
+
+This is a modification of: http://homepage3.nifty.com/oatu/emacs/calendar.html
+See also: https://stackoverflow.com/questions/9547912/emacs-calendar-show-more-than-3-months
+
+#+begin_src emacs-lisp
+;; https://stackoverflow.com/questions/9547912/emacs-calendar-show-more-than-3-months
+(defun xr/year-calendar (&optional year)
+  (interactive)
+  (require 'calendar)
+  (let* (
+      (current-year (number-to-string (nth 5 (decode-time (current-time)))))
+      (month 0)
+      (year (if year year (string-to-number (format-time-string "%Y" (current-time))))))
+    (switch-to-buffer (get-buffer-create calendar-buffer))
+    (when (not (eq major-mode 'calendar-mode))
+      (calendar-mode))
+    (setq displayed-month month)
+    (setq displayed-year year)
+    (setq buffer-read-only nil)
+    (erase-buffer)
+    ;; horizontal rows
+    (dotimes (j 4)
+      ;; vertical columns
+      (dotimes (i 3)
+        (calendar-generate-month
+          (setq month (+ month 1))
+          year
+          ;; indentation / spacing between months
+          (+ 5 (* 25 i))))
+      (goto-char (point-max))
+      (insert (make-string (- 10 (count-lines (point-min) (point-max))) ?\n))
+      (widen)
+      (goto-char (point-max))
+      (narrow-to-region (point-max) (point-max)))
+    (widen)
+    (goto-char (point-min))
+    (setq buffer-read-only t)))
+
+(defun xr/scroll-year-calendar-forward (&optional arg event)
+  "Scroll the yearly calendar by year in a forward direction."
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+                     last-nonmenu-event))
+  (unless arg (setq arg 0))
+  (save-selected-window
+    (if (setq event (event-start event)) (select-window (posn-window event)))
+    (unless (zerop arg)
+      (let* (
+              (year (+ displayed-year arg)))
+        (xr/year-calendar year)))
+    (goto-char (point-min))
+    (run-hooks 'calendar-move-hook)))
+
+(defun xr/scroll-year-calendar-backward (&optional arg event)
+  "Scroll the yearly calendar by year in a backward direction."
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+                     last-nonmenu-event))
+  (xr/scroll-year-calendar-forward (- (or arg 1)) event))
+
+(map! :leader
+      :desc "Scroll year calendar backward" "<left>" #'xr/scroll-year-calendar-backward
+      :desc "Scroll year calendar forward" "<right>" #'xr/scroll-year-calendar-forward)
+
+(defalias 'year-calendar 'xr/year-calendar)
+#+end_src
+
+#+RESULTS:
+: year-calendar
+
+Let's also play around with calfw.
+#+begin_src emacs-lisp
+(use-package! calfw)
+(use-package! calfw-org)
 #+end_src
