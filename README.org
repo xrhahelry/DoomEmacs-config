@@ -193,13 +193,6 @@ Emacs Dashboard is an extensible startup screen showing you recent files, bookma
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "\nKEYBINDINGS:\
-\nFind file               (SPC .)     \
-Open buffer list    (SPC b i)\
-\nFind recent files       (SPC f r)   \
-Open the eshell     (SPC e s)\
-\nOpen dired file manager (SPC d d)   \
-List of keybindings (SPC h b b)")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.doom.d/doom-emacs-dash.png")  ;; use custom image as banner
   (setq dashboard-center-content nil) ;; set to 't' for centered content
@@ -212,6 +205,9 @@ List of keybindings (SPC h b b)")
   (dashboard-modify-heading-icons '((recents . "file-text")
                                     (bookmarks . "book"))))
 #+end_src
+
+#+RESULTS:
+: t
 
 ** Dashboard in Emacsclient
 This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*. doesn't work at the moment.
