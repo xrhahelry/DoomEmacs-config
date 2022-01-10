@@ -1,14 +1,12 @@
 #+TITLE: Doom Emacs Config
-#+AUTHOR: Sujal Bajracharya
+#+PROPERTY: header-args :tangle config.el
 
 * Table of Contents :toc:
-- [[#doom-emacs-config][DOOM EMACS CONFIG]]
-  - [[#installing-this-config][Installing this config]]
 - [[#ui][UI]]
   - [[#setting-the-font][Setting the font]]
   - [[#setting-the-theme][Setting the Theme]]
   - [[#winner-mode][Winner mode]]
-  - [[#perspective][PERSPECTIVE]]
+  - [[#perspective][Perspective]]
 - [[#editor-settings][EDITOR SETTINGS]]
   - [[#commenting-lines][Commenting lines]]
   - [[#cursor][Cursor]]
@@ -26,19 +24,6 @@
   - [[#configuring-modeline][Configuring Modeline]]
 - [[#evaluate-elisp-code][EVALUATE ELISP CODE]]
 - [[#calendar][CALENDAR]]
-
-* DOOM EMACS CONFIG
-This is my Doom Emacs config which is filled mostly by code snippets I found online. This is an every evolving config as I find new cool things to put in here every day.
-** Installing this config
-*** Fresh install
-#+begin_src shell
-git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d
-#+end_src
-*** Replace existing one
-#+begin_src shell
-mv ~/.doom.d ~/.doom.d.back
-git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d
-#+end_src
 
 * UI
 ** Setting the font
@@ -64,7 +49,7 @@ Winner mode has been included with GNU Emacs since version 20.  This is a global
        :desc "Winner undo" "<left>" #'winner-undo))
 #+END_SRC
 
-** PERSPECTIVE
+** Perspective
 Perspective provides multiple named workspaces (or "perspectives") in Emacs, similar to having multiple desktops in window managers like Awesome and XMonad.  Each perspective has its own buffer list and its own window layout, making it easy to work on many separate projects without getting lost in all the buffers.  Switching to a perspective activates its window configuration, and when in a perspective, only its buffers are available (by default).  Doom Emacs uses 'SPC some_key' for binding some of the perspective commands, so I used this binging format for the perspective bindings that I created..
 
 | COMMAND                    | DESCRIPTION                         | KEYBINDING |
