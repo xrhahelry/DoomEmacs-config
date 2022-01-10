@@ -76,7 +76,6 @@
 
 (setq org-agenda-files
       '("~/Desktop/Org/Agenda/Tasks.org"
-        "~/Desktop/Org/Agenda/Urgent.org"
         "~/Desktop/Org/Agenda/Events.org"))
 
 (setq org-agenda-start-with-log-mode t)

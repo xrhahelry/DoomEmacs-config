@@ -3,6 +3,7 @@
 
 * Table of Contents :toc:
 - [[#doom-emacs-config][DOOM EMACS CONFIG]]
+  - [[#installing-this-config][Installing this config]]
 - [[#ui][UI]]
   - [[#setting-the-font][Setting the font]]
   - [[#setting-the-theme][Setting the Theme]]
@@ -28,6 +29,12 @@
 
 * DOOM EMACS CONFIG
 This is my Doom Emacs config which is filled mostly by code snippets I found online. This is an every evolving config as I find new cool things to put in here every day.
+** Installing this config
+*** Fresh install
+| git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d |
+*** Replace existing one
+mv ~/.doom.d ~/.doom.d.back
+| git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d |
 
 * UI
 ** Setting the font
@@ -173,8 +180,6 @@ The Location to my Agenda Org files.
 #+begin_src emacs-lisp
 (setq org-agenda-files
       '("~/Desktop/Org/Agenda/Tasks.org"
-        "~/Desktop/Org/Agenda/Urgent.org"
-        "~/Desktop/Org/Agenda/Fun.org"
         "~/Desktop/Org/Agenda/Events.org"))
 #+end_src
 
@@ -206,9 +211,6 @@ Emacs Dashboard is an extensible startup screen showing you recent files, bookma
   (dashboard-modify-heading-icons '((recents . "file-text")
                                     (bookmarks . "book"))))
 #+end_src
-
-#+RESULTS:
-: t
 
 ** Dashboard in Emacsclient
 This setting ensures that emacsclient always opens on *dashboard* rather than *scratch*. doesn't work at the moment.
