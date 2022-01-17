@@ -1,0 +1,28 @@
+# Aliases for doom emacs utilties
+alias doomsync ~/.emacs.d/bin/doom sync
+alias doomdoctor ~/.emacs.d/bin/doom doctor
+alias doomupgrade ~/.emacs.d/bin/doom upgrade
+alias doompurge ~/.emacs.d/bin/doom purge
+
+# Confirm before overwriting something
+alias cp cp -i
+alias mv mv -i
+alias rm rm -i
+
+# bare git repo alias for dotfiles
+alias config git --git-dir=$HOME/dotfiles/ --work-tree=$HOME $*
+
+# General Aliases
+alias cls clear
+alias md mkdir -p
+alias .. cd ..
+
+# Changing ls to lsd
+alias ls lsd --color always
+alias lls lsd -1
+alias la ls -a
+alias lx ls -X
+alias lk ls -S
+alias ld ls -l --group-dirs first --blocks permission --blocks size --blocks date --blocks name --date relative -I desktop.ini
+alias lh ld -a
+alias lr ld --tree -I node_modules

@@ -1,5 +1,6 @@
 #+TITLE: Doom Emacs Config
 #+AUTHOR: Sujal Bajracharya
+#+PROPERTY: header-args :tangle config.el
 
 * Table of Contents :toc:
 - [[#doom-emacs-config][DOOM EMACS CONFIG]]
@@ -16,6 +17,7 @@
   - [[#auto-save-changed-files][Auto save changed files]]
   - [[#colored-strings][Colored strings]]
   - [[#emojis][Emojis]]
+  - [[#tabs-width-to-2-spaces][Tabs width to 2 spaces]]
 - [[#org-mode][ORG MODE]]
   - [[#org-bullets][Org Bullets]]
   - [[#org-agenda][Org Agenda]]
@@ -147,6 +149,12 @@ Emojify is an Emacs extension to display emojis. It can display github style emo
 #+begin_src emacs-lisp
 (use-package emojify
   :hook (after-init . global-emojify-mode))
+#+end_src
+
+** Tabs width to 2 spaces
+#+begin_src emacs-lisp
+(setq-default tab-width 2)
+(setq-default evil-shift-width tab-width)
 #+end_src
 
 * ORG MODE
