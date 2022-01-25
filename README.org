@@ -4,7 +4,6 @@
 
 * Table of Contents :toc:
 - [[#doom-emacs-config][DOOM EMACS CONFIG]]
-  - [[#installing-this-config][Installing this config]]
 - [[#ui][UI]]
   - [[#setting-the-font][Setting the font]]
   - [[#setting-the-theme][Setting the Theme]]
@@ -31,16 +30,6 @@
 
 * DOOM EMACS CONFIG
 This is my Doom Emacs config which is filled mostly by code snippets I found online. This is an every evolving config as I find new cool things to put in here every day.
-** Installing this config
-*** Fresh install
-#+begin_src shell
-git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d
-#+end_src
-*** Replace existing one
-#+begin_src shell
-mv ~/.doom.d ~/.doom.d.back
-git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d
-#+end_src
 
 * UI
 ** Setting the font

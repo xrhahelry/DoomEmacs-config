@@ -1,8 +1,3 @@
-git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d
-
-mv ~/.doom.d ~/.doom.d.back
-git clone https://github.com/XRhahelry/DoomEmacs-config.git ~/.doom.d
-
 (setq doom-font (font-spec :family "JetBrains Mono" :size 20 :weight 'light)
       doom-variable-pitch-font (font-spec :family "Fira Code Retina" :size 13 :weight 'light))
 
