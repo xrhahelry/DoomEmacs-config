@@ -20,6 +20,7 @@
 - [[#org-mode][ORG MODE]]
   - [[#org-bullets][Org Bullets]]
   - [[#org-agenda][Org Agenda]]
+  - [[#org-roam][Org Roam]]
 - [[#dashboard][DASHBOARD]]
   - [[#configuring-dashboard][Configuring Dashboard]]
   - [[#dashboard-in-emacsclient][Dashboard in Emacsclient]]
@@ -190,6 +191,29 @@ This setting makes Agenda more detaied.
 (setq org-agenda-start-with-log-mode t)
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
+#+end_src
+
+** Org Roam
+*** Basic Setup
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/Desktop/Roam/")
+  (org-roam-completion-everywhere t)
+  :config
+  (org-roam-setup))
+#+end_src
+
+*** Keybindings
+#+begin_src emacs-lisp
+(map! :leader
+     (:prefix ("r" . "Org Roam")
+      :desc "Org Roam toggle" "t" #'org-roam-buffer-toggle
+      :desc "Org Roam insert node" "i" #'org-roam-node-insert
+      :desc "Org Roam find" "f" #'org-roam-node-find))
 #+end_src
 
 * DASHBOARD

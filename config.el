@@ -85,6 +85,22 @@
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
 
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/Desktop/Roam/")
+  (org-roam-completion-everywhere t)
+  :config
+  (org-roam-setup))
+
+(map! :leader
+     (:prefix ("r" . "Org Roam")
+      :desc "Org Roam toggle" "t" #'org-roam-buffer-toggle
+      :desc "Org Roam insert node" "i" #'org-roam-node-insert
+      :desc "Org Roam find" "f" #'org-roam-node-find))
+
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
